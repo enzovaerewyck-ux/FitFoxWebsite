@@ -1,0 +1,7 @@
+# The Lost Suitcase (Vex episode 3)
+31.9 s, 1080x1920, 30 fps, clip sound + phone buzz/chime (no music: add in Instagram).
+Continuity: arrives in white tee, charcoal trousers, white sneakers, camel jacket + tan shoulder bag. Bag: navy knit polo, olive overshirt, rust scarf, sunglasses, toiletries. Final: polo + trousers + overshirt (sleeves rolled) + sneakers.
+Timeline (s): 0 city + title · 1.4 station · 3.0 carousel "Perfect." · 5.4 hotel · 7.0 phone 6:07 "Dinner tonight. 8 PM. Don't be late." · 8.4 bag contents · 9.8 mirror jacket · 11.2 scarf off · 12.8 bed + phone · 14.0 OTS · 14.8 app UI (in-house) · 17.6 polo · 18.9 sleeves · 20.1 sneaker · 21.3 mirror + "Keep it simple." · 23.3 rooftop "Nice look." · 24.9 smug · 26.1 suitcase · 28.1 dry look "Maybe I packed too much." · 30.1 end card FitFox / Use what you have.
+Keyframe jobs (2026-10-04): city 9b41537f · station fd204bcf · carousel 89c3832c · hotel e574a7bf · phone a6186623 · bag 7c85d854 · mirror1 47eaf895 · mirror2 e9c3577e · bed 649c39b3 · OTS a0fdb3f0 · polo 3db7b0fa · sleeves 6d01b5f0 · sneaker 29d9c5a7 · mirror final d9ab3264 (still) · rooftop 4d418764 · smug f86ac4dc (still) · suitcase 7b5adf61 · dry look 58b8622f · end card a39fa1b8 (still) · UI flat-lay 2ec8bc78
+Clips (kling3_0 pro, sound on): d97fa875, e1f6c58c, 584516d8, d178fd24, 8dd952b2, b62a4762, 47bae3cd, 8e5f21d4, 29df5a45, d052231d, 2f787b4a, e8cded49, 0f3a6fe5, 49419da3, 8c2e8248, 28343ef2
+Higgsfield media: reel a7996b0f-04f5-4970-9ccb-173945116797 · cover 5a357bea-1ddc-463e-8b4c-8456811046c0
