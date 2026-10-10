@@ -5,6 +5,8 @@
 export const brand = {
   name: "FitFox",
   /** Name of the fox character (used sparingly in copy). */
+  /** Logo lockup (fox + wordmark). Replace this file when the name changes. 674×360, transparent. */
+  logo: "/logo.webp",
   foxName: "Vex",
   tagline: "Your personal AI stylist.",
   promise: "See a look you love. Make it yours.",

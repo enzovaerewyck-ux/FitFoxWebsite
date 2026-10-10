@@ -1,14 +1,17 @@
+import Image from "next/image";
 import { brand } from "@/config/brand";
 
-/** Text wordmark matching the app: bold italic serif. */
-export function Wordmark({ className = "", tone = "ink" }: { className?: string; tone?: "ink" | "light" }) {
+/** Brand logo: Vex walking + the FitFox wordmark (public/logo.webp). */
+export function Wordmark({ className = "h-[58px]", priority = false }: { className?: string; priority?: boolean }) {
   return (
-    <span
-      className={`font-display text-[1.7rem] font-bold italic leading-none tracking-[-0.02em] ${
-        tone === "light" ? "text-on-night" : "text-ink"
-      } ${className}`}
-    >
-      {brand.name}
-    </span>
+    <Image
+      src={brand.logo}
+      alt={brand.name}
+      width={674}
+      height={360}
+      priority={priority}
+      sizes="160px"
+      className={`w-auto ${className}`}
+    />
   );
 }

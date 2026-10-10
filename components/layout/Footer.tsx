@@ -14,7 +14,7 @@ export function Footer() {
     <footer className="relative overflow-hidden">
       <div className="container-brand flex flex-col gap-8 py-14 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <Wordmark />
+          <Wordmark className="h-[84px]" />
           <p className="mt-3 text-ink-soft">{brand.tagline}</p>
         </div>
         <nav aria-label="Footer">

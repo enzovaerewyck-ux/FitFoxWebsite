@@ -32,10 +32,10 @@ export function Navbar() {
         scrolled || open ? "border-b border-line/70 bg-cream/92 shadow-[0_8px_30px_-24px_rgba(60,40,20,0.5)] backdrop-blur-md" : "border-b border-transparent bg-cream/0"
       }`}
     >
-      <nav aria-label="Main" className="container-brand flex h-[72px] items-center justify-between gap-6">
+      <nav aria-label="Main" className="container-brand flex h-[80px] items-center justify-between gap-6">
         {/* Plain anchor: this is a one-page site (also keeps the standalone preview.html working). */}
         <a href="#main" aria-label={`${brand.name} — back to top`} className="shrink-0" onClick={() => setOpen(false)}>
-          <Wordmark />
+          <Wordmark priority className="h-[56px] sm:h-[66px]" />
         </a>
 
         <ul className="hidden items-center gap-8 lg:flex">
@@ -77,7 +77,7 @@ export function Navbar() {
         {open && (
           <motion.div
             id="mobile-menu"
-            className="fixed inset-x-0 top-[72px] bottom-0 z-40 overflow-y-auto bg-cream lg:hidden"
+            className="fixed inset-x-0 top-[80px] bottom-0 z-40 overflow-y-auto bg-cream lg:hidden"
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
