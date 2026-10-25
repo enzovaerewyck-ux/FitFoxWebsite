@@ -14,6 +14,7 @@ import { Community } from "@/components/sections/Community";
 import { BrandStory } from "@/components/sections/BrandStory";
 import { Faq } from "@/components/sections/Faq";
 import { FinalCta } from "@/components/sections/FinalCta";
+import { FloatingCta } from "@/components/ui/FloatingCta";
 import { Footer } from "@/components/layout/Footer";
 
 export default function Home() {
@@ -38,6 +39,7 @@ export default function Home() {
         <FinalCta />
       </main>
       <Footer />
+      <FloatingCta />
     </>
   );
 }

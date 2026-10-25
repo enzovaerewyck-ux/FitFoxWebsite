@@ -77,7 +77,7 @@ export function Navbar() {
         {open && (
           <motion.div
             id="mobile-menu"
-            className="fixed inset-x-0 top-[80px] bottom-0 z-40 overflow-y-auto bg-cream lg:hidden"
+            className="fixed inset-x-0 top-[80px] bottom-0 z-[45] overflow-y-auto bg-cream lg:hidden"
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}

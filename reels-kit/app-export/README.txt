@@ -9,3 +9,7 @@ https://d2ol7oe51mr4n9.cloudfront.net/user_3Jy2GTW2rrzwUgKXzNrH2lWCBId/251cf0a3-
 
 --- Vos zwaait v3 (lachen + zwaaien + natuurlijk speels hoofdje, 1:1, 4,9s loop, MP4) ---
 https://d2ol7oe51mr4n9.cloudfront.net/user_3Jy2GTW2rrzwUgKXzNrH2lWCBId/7a33df0e-ec95-4ffe-aeca-0c31b91b7878.mp4  (0,16 MB, 720x720)
+
+--- Vos zoekt in kast (wachtanimatie, 1:1 crème #F7F4EE, 7,9s naadloze loop, MP4 720x720) ---
+https://d2ol7oe51mr4n9.cloudfront.net/user_3Jy2GTW2rrzwUgKXzNrH2lWCBId/e8639d86-3863-47c7-a51b-87a89afe4978.mp4  (0,7 MB)
+Kling 35840009-2218-4108-8a46-c7d8642b55a5 · startbeeld 56675b1b · lampje zelf getekend (5,05–6,45s)
