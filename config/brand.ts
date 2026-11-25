@@ -4,15 +4,17 @@
  */
 export const brand = {
   name: "FitFox",
-  /** Name of the fox character (used sparingly in copy). */
   /** Logo lockup (fox + wordmark). Replace this file when the name changes. 674×360, transparent. */
   logo: "/logo.webp",
-  foxName: "Vex",
-  tagline: "Your personal AI stylist.",
-  promise: "See a look you love. Make it yours.",
+  /** Name of the fox character (used sparingly in copy). */
+  foxName: "Vexi",
+  tagline: "Your wardrobe has more potential than you think.",
+  promise: "More outfits. Same wardrobe.",
+  /** Public launch moment, used in hero, CTA and FAQ. */
+  launch: "January 2027",
   description:
-    "Full wardrobe, nothing to wear? FitFox is your personal AI stylist: it learns your style, builds outfits from the clothes you already own and helps you discover what to wear next.",
-  url: "https://fitfox.app", // TODO: replace with the final production domain
+    "A closet full of clothes and nothing to wear? FitFox gets to know the clothes you already own and shows you new outfits, looks you can recreate, and how they look on you. Launching January 2027.",
+  url: "https://fit-fox-website.vercel.app", // TODO: replace when a custom domain is connected
   social: {
     instagram: "https://instagram.com/", // TODO: add real handle
     tiktok: "https://tiktok.com/", // TODO: add real handle
@@ -25,6 +27,6 @@ export const brand = {
 } as const;
 
 export const seo = {
-  title: `${brand.name} — Your Personal AI Stylist`,
+  title: `${brand.name} — More outfits. Same wardrobe.`,
   description: brand.description,
 };

@@ -1,10 +1,9 @@
 export const navLinks = [
   { label: "How it works", href: "#how-it-works" },
-  { label: "Style DNA", href: "#style-dna" },
-  { label: "Wardrobe", href: "#wardrobe" },
-  { label: "Challenges", href: "#challenges" },
-  { label: "About", href: "#about" },
+  { label: "Features", href: "#features" },
+  { label: "Your stylist", href: "#stylist" },
   { label: "FAQ", href: "#faq" },
 ] as const;
 
 export const ctaHref = "#early-access";
+export const ctaLabel = "Join the waitlist";

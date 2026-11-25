@@ -1,82 +1,72 @@
 "use client";
 
 import Image from "next/image";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { Reveal } from "@/components/ui/Reveal";
-import { Fox } from "@/components/fox/Fox";
-import { FoxBubble } from "@/components/fox/FoxBubble";
-import { brand } from "@/config/brand";
-import { photos } from "@/data/garmentPhotos";
 
-const thoughts = [
-  "I have nothing to wear.",
-  "I love this look… but would it ever work on me?",
-  "Bought it three months ago. Tags still on.",
-  "Why do I always end up in the same black outfit?",
+const moments = [
+  { n: "01", t: "The same jeans. Again.", d: "They're safe. They're also all you've worn since March." },
+  { n: "02", t: "That blazer you love.", d: "Still on the hanger, waiting for its big day." },
+  { n: "03", t: "Date tonight. Twelve tries.", d: "And you end up back in the black T-shirt." },
+  { n: "04", t: "Saw a great outfit on someone.", d: "No idea how to pull it off with what you own." },
+  { n: "05", t: "Finally decided.", d: "Favourite shirt? In the wash." },
 ];
 
 export function Problem() {
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [60, -60]);
+  const rotate = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [-2, 2]);
+
   return (
-    <section aria-labelledby="problem-title" className="section-y relative overflow-hidden">
-      <div className="container-brand grid items-center gap-16 lg:grid-cols-[1fr_1fr] lg:gap-20">
+    <section ref={ref} aria-labelledby="problem-title" className="section-y relative overflow-hidden">
+      <div className="container-brand grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
         <div>
           <Reveal>
             <p className="eyebrow mb-5">Sound familiar?</p>
-            <h2 id="problem-title" className="display text-balance text-[2.5rem] sm:text-6xl lg:text-[4.1rem]">
-              Door open. Coffee going cold.
-              <br />
-              <span className="text-ink-soft">Still no idea what to wear.</span>
+            <h2 id="problem-title" className="display text-balance text-[2.6rem] sm:text-6xl lg:text-[4.3rem]">
+              Same clothes. Same outfits. <span className="italic text-ink-soft">Every single week.</span>
             </h2>
           </Reveal>
 
-          <ul className="mt-12 space-y-4">
-            {thoughts.map((t, i) => (
-              <Reveal as="li" key={t} delay={0.1 + i * 0.1}>
-                <div
-                  className="relative inline-flex max-w-md items-start gap-3 rounded-2xl rounded-bl-md border border-line bg-paper px-5 py-4 shadow-soft"
-                  style={{ marginLeft: `${[0, 28, 8, 20][i]}px` }}
-                >
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-fox" aria-hidden />
-                  <p className="font-display text-lg italic leading-snug sm:text-xl">&ldquo;{t}&rdquo;</p>
+          <ol className="mt-10 divide-y divide-line border-y border-line">
+            {moments.map((m, i) => (
+              <Reveal as="li" key={m.n} delay={0.05 * i}>
+                <div className="group flex gap-5 py-5 sm:py-6">
+                  <span className="pt-1 font-display text-sm italic text-fox-ink">{m.n}</span>
+                  <p className="text-[17px] leading-snug sm:text-lg">
+                    <span className="font-semibold">{m.t}</span> <span className="text-ink-soft">{m.d}</span>
+                  </p>
                 </div>
               </Reveal>
             ))}
-          </ul>
+          </ol>
         </div>
 
-        {/* Overflowing wardrobe + fox */}
         <Reveal className="relative mx-auto w-full max-w-[520px]">
-          <figure className="relative">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[var(--radius-2xl)] border border-line bg-sand">
+          <div className="relative aspect-[920/1016]">
+            <div aria-hidden className="absolute inset-[8%] rounded-full bg-fox/15 blur-[70px]" />
+            <motion.div style={{ y, rotate }} className="relative h-full w-full">
               <Image
-                src={photos.problem}
-                alt="A woman sits on her bed surrounded by piles of tried-on clothes, looking at her completely full wardrobe"
+                src="/brand/wardrobe-foxes.webp"
+                alt="An overflowing wardrobe with clothes piled on the floor, and five foxes peeking out and waving"
                 fill
-                sizes="(min-width: 1024px) 520px, 92vw"
-                className="object-cover object-[50%_40%]"
+                sizes="(min-width: 1024px) 520px, 90vw"
+                className="object-contain"
               />
-            </div>
-
-            <div className="absolute -bottom-4 -right-2 z-10 sm:-right-8">
-              <div className="absolute bottom-[96%] right-[30%] w-max">
-                <FoxBubble text="Nothing to wear. Sure." tail="bottom-right" size="sm" />
-              </div>
-              <Fox pose="wave" mirror className="w-[132px] sm:w-[170px]" />
-            </div>
-
-            <figcaption className="mt-6 font-display text-lg italic text-ink-soft">She says she has nothing to wear.</figcaption>
-          </figure>
+            </motion.div>
+          </div>
         </Reveal>
       </div>
 
       <Reveal className="container-brand mt-20 sm:mt-28">
-        <p className="mx-auto max-w-3xl text-balance text-center font-display text-3xl leading-tight sm:text-[2.6rem]">
-          You probably don&rsquo;t need more clothes.
-          <br />
-          You need <span className="italic text-fox-ink">more ways to wear them.</span>
+        <p className="mx-auto max-w-4xl text-balance text-center font-display text-[2rem] leading-[1.1] sm:text-5xl">
+          You don&rsquo;t need more clothes. You need to see{" "}
+          <span className="italic text-fox-ink">what yours can do.</span>
         </p>
-        <p className="mx-auto mt-5 max-w-xl text-center text-lg text-ink-soft">
-          That&rsquo;s exactly what {brand.name} is for.
-        </p>
+        <p className="mx-auto mt-5 max-w-xl text-center text-lg text-ink-soft">Your wardrobe has more potential than you think.</p>
       </Reveal>
     </section>
   );

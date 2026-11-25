@@ -48,10 +48,14 @@ export function FinalCta() {
         <div className="container-brand relative grid gap-12 py-20 sm:py-28 lg:grid-cols-[1.3fr_0.7fr] lg:items-end">
           <div>
             <Reveal>
-              <p className="eyebrow mb-6 !text-[#e0a57d]">Early access</p>
+              <p className="eyebrow mb-6 !text-[#e0a57d]">Launching {brand.launch}</p>
               <h2 id="cta-title" className="display text-balance text-[2.9rem] sm:text-7xl lg:text-[5.6rem]">
-                Ready to love your wardrobe <span className="italic">again?</span>
+                Your wardrobe has more potential <span className="italic">than you think.</span>
               </h2>
+              <p className="mt-6 max-w-xl text-lg text-on-night/70">
+                Join the waitlist and be the first to know when {brand.name} goes live. It&rsquo;s free, and we&rsquo;ll only email you
+                about the launch.
+              </p>
             </Reveal>
 
             <Reveal delay={0.1}>
@@ -65,7 +69,7 @@ export function FinalCta() {
                     role="status"
                   >
                     <p className="font-display text-2xl italic">You&rsquo;re on the list.</p>
-                    <p className="mt-2 text-on-night/70">We&rsquo;ll email {email} as soon as your spot in the beta opens.</p>
+                    <p className="mt-2 text-on-night/70">We&rsquo;ll email {email} the moment {brand.name} launches in {brand.launch}.</p>
                   </motion.div>
                 ) : (
                   <motion.form key="form" onSubmit={onSubmit} noValidate className="mt-10 max-w-xl" exit={{ opacity: 0 }}>
@@ -96,7 +100,7 @@ export function FinalCta() {
                         onFocus={() => setWiggle((w) => w + 1)}
                         className="min-h-14 rounded-[10px] bg-cream px-7 font-semibold text-ink transition-transform hover:-translate-y-0.5 active:scale-[0.98] disabled:opacity-60"
                       >
-                        {status === "sending" ? "Joining…" : "Get early access"}
+                        {status === "sending" ? "Joining…" : "Join the waitlist"}
                       </button>
                     </div>
                     {/* Honeypot for bots — hidden from people and assistive tech */}
@@ -113,11 +117,8 @@ export function FinalCta() {
                         ? "That email doesn't look quite right."
                         : status === "failed"
                           ? "Something went wrong on our side. Mind trying again in a minute?"
-                          : "We'll send your invite as soon as there's room. No spam, promise. Unsubscribe anytime."}
+                          : "Free to join. No spam, promise. Unsubscribe anytime."}
                     </p>
-                    <a href="#early-access" onClick={(e) => { e.preventDefault(); document.getElementById("cta-email")?.focus(); }} className="mt-5 inline-block text-sm font-semibold text-on-night underline decoration-fox underline-offset-4 hover:text-[#e0a57d]">
-                      Join the beta →
-                    </a>
                   </motion.form>
                 )}
               </AnimatePresence>

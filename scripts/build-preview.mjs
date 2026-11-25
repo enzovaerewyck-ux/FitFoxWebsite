@@ -54,8 +54,8 @@ const walk = (dir) =>
   readdirSync(join(root, "public", dir), { withFileTypes: true }).flatMap((d) =>
     d.isDirectory() ? walk(`${dir}/${d.name}`) : /\.(webp|png)$/.test(d.name) ? [`${dir}/${d.name}`] : []
   );
-const assets = [...walk("fox"), ...walk("images"), ...walk("photos")];
-for (const a of assets) js = js.split(`"/${a}"`).join(`"${dataUri(join(root, "public", a))}"`);
+const assets = [...walk("fox"), ...walk("images"), ...walk("photos"), ...walk("brand"), "logo.webp", "fox-mark.webp"];
+const assetMap = Object.fromEntries(assets.map((a) => [`/${a}`, dataUri(join(root, "public", a))]));
 
 // 4. Page shell (mirrors app/layout.tsx).
 const brandMod = await build({ entryPoints: [join(root, "config/brand.ts")], bundle: true, write: false, format: "esm" });
@@ -74,6 +74,7 @@ const html = `<!doctype html>
 <body>
 <div id="root"></div>
 <noscript><p style="padding:40px;font-family:sans-serif">${brand.name} preview needs JavaScript.</p></noscript>
+<script>window.__ASSETS=${JSON.stringify(assetMap)};</script>
 <script>${js}</script>
 </body>
 </html>`;

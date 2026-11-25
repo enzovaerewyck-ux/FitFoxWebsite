@@ -53,7 +53,7 @@ export function Navbar() {
             href={ctaHref}
             className="hidden min-h-11 items-center rounded-[10px] bg-night px-5 text-sm font-semibold text-on-night transition-transform hover:-translate-y-0.5 sm:inline-flex"
           >
-            Get early access
+            Join the waitlist
           </a>
           <button
             type="button"
@@ -105,7 +105,7 @@ export function Navbar() {
                   onClick={() => setOpen(false)}
                   className="inline-flex min-h-13 flex-1 items-center justify-center rounded-[10px] bg-night px-6 py-4 font-semibold text-on-night"
                 >
-                  Get early access
+                  Join the waitlist
                 </a>
                 <Fox pose="wave" width={96} decorative />
               </div>

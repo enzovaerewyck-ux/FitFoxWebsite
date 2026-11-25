@@ -14,11 +14,14 @@ type Props = {
   draggable?: boolean;
 };
 
+// build-preview.mjs injects every public image as a data URI (window.__ASSETS), so template-string paths work too.
+const assets = (globalThis as unknown as { __ASSETS?: Record<string, string> }).__ASSETS ?? {};
+
 export default function Image({ src, alt, width, height, fill, priority, sizes: _sizes, className, style, draggable }: Props) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={src}
+      src={assets[src] ?? src}
       alt={alt}
       width={fill ? undefined : width}
       height={fill ? undefined : height}

@@ -17,7 +17,7 @@ export function Faq() {
                 Before you <span className="italic">ask.</span>
               </>
             }
-            intro="The things people usually wonder about before they join."
+            intro="The things people usually wonder about before they join the waitlist."
           />
           <Reveal delay={0.1} className="mt-10 hidden items-end gap-2 lg:flex">
             <Fox pose="cheer" className="w-[96px]" decorative />

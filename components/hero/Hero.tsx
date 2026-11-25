@@ -1,119 +1,157 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { Button } from "@/components/ui/Button";
-import { Fox } from "@/components/fox/Fox";
-import { FoxBubble } from "@/components/fox/FoxBubble";
-import { FloatingTag } from "./FloatingTag";
-import { motionTokens } from "@/config/tokens";
-import { ctaHref } from "@/config/navigation";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { brand } from "@/config/brand";
-import { photos } from "@/data/garmentPhotos";
+import { ctaHref, ctaLabel } from "@/config/navigation";
+import { Phone } from "@/components/phone/Phone";
+import { DailyLookScreen } from "@/components/phone/screens";
 
-const heroLines = ["Not bad. I'd change the shoes.", "Good. Keep the coat."];
+const ease = [0.22, 1, 0.36, 1] as const;
+
+function Line({ children, delay }: { children: React.ReactNode; delay: number }) {
+  return (
+    <span className="block overflow-hidden pb-[0.08em]">
+      <motion.span
+        className="block"
+        initial={{ y: "105%" }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.9, delay, ease }}
+      >
+        {children}
+      </motion.span>
+    </span>
+  );
+}
+
+/** Garment cut-outs orbiting the phone, with parallax on scroll. */
+const orbit = [
+  { src: "coat-camel", cls: "left-[-34%] top-[10%] w-[44%] rotate-[-8deg]", depth: -60 },
+  { src: "loafers-black", cls: "right-[-30%] bottom-[16%] w-[38%] rotate-[10deg]", depth: -110 },
+  { src: "knit-cream", cls: "right-[-36%] top-[4%] w-[42%] rotate-[7deg]", depth: -30 },
+  { src: "trousers-charcoal", cls: "left-[-30%] bottom-[6%] w-[34%] rotate-[-4deg]", depth: -90 },
+];
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
-  const [line, setLine] = useState(0);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imgY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 60]);
-  const foxY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -30]);
-
-  const fade = (delay: number) => ({
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: motionTokens.duration.slow, ease: motionTokens.ease, delay },
-  });
+  const phoneY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 90]);
+  const k = reduce ? 0 : 1;
+  const ys = [
+    useTransform(scrollYProgress, [0, 1], [0, orbit[0].depth * k]),
+    useTransform(scrollYProgress, [0, 1], [0, orbit[1].depth * k]),
+    useTransform(scrollYProgress, [0, 1], [0, orbit[2].depth * k]),
+    useTransform(scrollYProgress, [0, 1], [0, orbit[3].depth * k]),
+  ];
 
   return (
-    <section ref={ref} aria-labelledby="hero-title" className="relative overflow-hidden pt-[104px] pb-16 sm:pt-32 lg:pb-28">
-      <div className="container-brand grid items-center gap-14 lg:grid-cols-[1.02fr_1fr] lg:gap-10">
-        {/* Copy */}
-        <div className="relative z-10 max-w-xl">
-          <motion.p {...fade(0.05)} className="eyebrow mb-6">
-            Your personal AI stylist
+    <section ref={ref} aria-labelledby="hero-title" className="relative overflow-hidden pt-[104px] sm:pt-[128px]">
+      {/* warm glow */}
+      <div aria-hidden className="pointer-events-none absolute -right-[20%] top-[-10%] h-[70vw] max-h-[820px] w-[70vw] max-w-[820px] rounded-full bg-fox/15 blur-[110px]" />
+      <div aria-hidden className="grain pointer-events-none absolute inset-0 opacity-60" />
+
+      <div className="container-brand relative grid items-center gap-14 pb-20 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:pb-28">
+        <div className="text-center lg:text-left">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease }}
+            className="mx-auto inline-flex items-center gap-2 rounded-full border border-line bg-paper/80 px-4 py-2 text-[12px] font-bold uppercase tracking-[0.18em] text-fox-ink backdrop-blur lg:mx-0"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inset-0 animate-ping rounded-full bg-fox/60" />
+              <span className="relative h-2 w-2 rounded-full bg-fox" />
+            </span>
+            Launching {brand.launch}
           </motion.p>
-          <motion.h1 {...fade(0.12)} id="hero-title" className="display text-[3.4rem] sm:text-7xl lg:text-[4.6rem] xl:text-[5.1rem]">
-            Full wardrobe.
-            <br />
-            <span className="italic">Nothing</span> to wear?
-          </motion.h1>
-          <motion.p {...fade(0.22)} className="mt-7 max-w-md text-lg leading-relaxed text-ink-soft sm:text-xl">
-            {brand.name} is the personal stylist in your pocket. It learns what you love, finds new outfits in the clothes you already own
-            and tells you honestly when you don&rsquo;t need to buy a thing.
+
+          <h1 id="hero-title" className="display mt-7 text-[3.05rem] leading-[0.98] sm:text-7xl lg:text-[5.6rem]">
+            <Line delay={0.1}>A closet full</Line>
+            <Line delay={0.2}>of clothes.</Line>
+            <Line delay={0.3}>
+              <span className="italic text-fox-ink">Nothing</span> to wear?
+            </Line>
+          </h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.55, ease }}
+            className="mx-auto mt-7 max-w-[34rem] text-pretty text-lg leading-relaxed text-ink-soft sm:text-xl lg:mx-0"
+          >
+            Your next favourite outfit is probably already hanging there. {brand.name} gets to know the clothes you own and shows you
+            what they can really do.
           </motion.p>
-          <motion.div {...fade(0.3)} className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <Button href={ctaHref}>Get early access</Button>
-            <Button href="#how-it-works" variant="secondary">
+
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.7, ease }}
+            className="mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start"
+          >
+            <a
+              href={ctaHref}
+              className="group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-night px-8 text-[16px] font-semibold text-on-night shadow-[var(--shadow-float)] transition-transform hover:-translate-y-0.5 active:scale-[0.98] sm:w-auto"
+            >
+              {ctaLabel}
+              <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
+            </a>
+            <a
+              href="#how-it-works"
+              className="inline-flex min-h-14 w-full items-center justify-center rounded-full border border-line bg-paper/70 px-8 text-[16px] font-semibold text-ink backdrop-blur transition-colors hover:border-ink/40 sm:w-auto"
+            >
               See how it works
-            </Button>
+            </a>
           </motion.div>
-          <motion.p {...fade(0.38)} className="mt-7 flex items-center gap-2.5 text-sm text-ink-soft">
-            <span className="inline-block h-[2px] w-6 bg-fox" aria-hidden />
-            Now in private beta · Built around your style, not your demographic.
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
+            className="mt-5 text-sm text-ink-mute"
+          >
+            Free to join · For every style, his and hers
           </motion.p>
         </div>
 
-        {/* Visual */}
+        {/* Phone + orbiting wardrobe */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.97 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: motionTokens.ease, delay: 0.15 }}
-          className="relative mx-auto w-full max-w-[520px] lg:mr-0"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.1, delay: 0.35, ease }}
+          className="relative mx-auto w-[min(64vw,300px)] lg:w-[320px]"
         >
-          <div className="relative ml-[12%] overflow-hidden rounded-[var(--radius-2xl)] border border-line/60 shadow-card sm:ml-[14%]">
-            <motion.div style={{ y: imgY }} className="relative aspect-[4/5] scale-[1.08]">
-              <Image
-                src={photos.hero}
-                alt="A man checks his outfit in the bedroom mirror: camel coat, cream ribbed knit and charcoal pleated trousers"
-                fill
-                priority
-                sizes="(min-width: 1024px) 460px, 88vw"
-                className="object-cover object-[50%_20%]"
-              />
-            </motion.div>
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-night/45 to-transparent" />
-            <p className="absolute bottom-5 right-5 rounded-md bg-fox px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-on-night">
-              Style of the day
-            </p>
-          </div>
-          <p className="ml-[42%] mt-4 text-right font-display text-[15px] italic leading-snug text-ink-soft sm:ml-[46%]">
-            Coat and knit: already his. {brand.name} just found the trousers.
-          </p>
-
-          {/* Floating UI */}
-          <FloatingTag className="right-[-4px] top-[7%] sm:right-[-22px]" delay={0.7} label="Style DNA" value="Minimal 82%" meter={82} />
-          <FloatingTag className="left-[2%] top-[34%] hidden sm:flex" delay={0.85} label="Date night" value="Under €200" />
-          <FloatingTag className="right-[-4px] top-[33%] sm:right-[-30px] sm:top-auto sm:bottom-[26%]" delay={1} label="Already owned" value="White sneakers ✓" owned />
-
-          {/* Fox inspecting the look */}
-          <motion.div style={{ y: foxY }} className="absolute -bottom-6 -left-3 z-20 sm:-left-8">
+          <motion.div style={{ y: phoneY }} className="relative z-10">
+            <Phone label="The FitFox Daily Look screen: today's outfit picked from your own wardrobe, with the weather and laundry taken into account">
+              <DailyLookScreen />
+            </Phone>
+          </motion.div>
+          {orbit.map((o, i) => (
             <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ ...motionTokens.springSoft, delay: 0.9 }}
-              className="relative"
+              key={o.src}
+              style={{ y: ys[i] }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.9, delay: 0.8 + i * 0.12, ease }}
+              className={`absolute ${o.cls} ${i % 2 ? "z-20" : "z-0"}`}
+              aria-hidden
             >
-              <motion.div
-                initial={{ opacity: 0, y: 8, scale: 0.9 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ delay: 1.5, duration: 0.4 }}
-                className="absolute bottom-[99%] left-[40%] z-10 w-max max-w-[210px]"
-              >
-                <button
-                  type="button"
-                  onClick={() => setLine((l) => (l + 1) % heroLines.length)}
-                  className="cursor-pointer text-left"
-                  aria-label="Ask the fox for another opinion"
-                >
-                  <FoxBubble text={heroLines[line]} tail="bottom-left" size="sm" />
-                </button>
-              </motion.div>
-              <Fox pose="cool" idle priority reactKey={line === 0 ? undefined : line} className="w-[124px] sm:w-[170px]" sizes="170px" />
+              <div className={reduce ? "" : "animate-float"} style={{ animationDelay: `${i * 0.9}s` }}>
+                <div className="relative aspect-square drop-shadow-[0_18px_22px_rgb(60_40_20/0.25)]">
+                  <Image src={`/photos/cutout/${o.src}.webp`} alt="" fill sizes="160px" className="object-contain" priority={i < 2} />
+                </div>
+              </div>
             </motion.div>
+          ))}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 1.4, ease }}
+            className="absolute -left-[22%] top-[52%] z-30 hidden rounded-2xl border border-line bg-paper/95 px-4 py-3 shadow-[var(--shadow-float)] backdrop-blur sm:block"
+          >
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-fox-ink">Built from</p>
+            <p className="font-display text-lg leading-tight">your own closet</p>
           </motion.div>
         </motion.div>
       </div>
